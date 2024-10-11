@@ -1,0 +1,124 @@
+/* Configuração geral */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom right, #FFB75E, #ED8F03);
+    height: 100%;
+    overflow-x: hidden;
+}
+
+/* Estilo da topbar */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+}
+
+.search-bar input {
+    padding: 8px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    width: 300px;
+}
+
+.icons {
+    display: flex;
+    gap: 20px;
+}
+
+.icon {
+    width: 30px;
+    height: auto;
+    cursor: pointer;
+}
+
+/* Área de conteúdo principal */
+.content {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Contêiner de formulários */
+.form-container {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Aumentado para 30px para mais espaço entre os cartões */
+    overflow-y: auto; /* Ativa o scroll para mais formulários */
+    padding-bottom: 20px;
+}
+
+/* Cartão de formulário preenchido */
+.form-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px; /* Adicionado para garantir espaço extra abaixo de cada cartão */
+}
+
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.form-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.form-details p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* Scroll */
+.form-container {
+    max-height: calc(100vh - 120px); /* Faz com que ocupe o espaço abaixo da topbar */
+    overflow-y: auto;
+}
+
+.form-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.form-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.form-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.form-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

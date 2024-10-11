@@ -32,8 +32,10 @@ body {
 }
 
 .logo {
-    width: 150px;
-    margin-bottom: 20px;
+    display: block;
+    margin: 0 auto 20px auto;  /* Centraliza a logo e adiciona um espaço abaixo */
+    max-width: 150px;  /* Define o tamanho máximo da logo */
+    height: auto;
 }
 
 h1 {
@@ -97,3 +99,24 @@ h1 {
 .extra-links a:hover span {
     text-decoration: underline;
 }
+.flash-messages {
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.flash-message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+}
+
+.flash-message.success {
+    background-color: #4CAF50;
+}
+
+.flash-message.error {
+    background-color: #f44336;
+}
+

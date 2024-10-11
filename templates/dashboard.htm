@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='screen.css') }}">
+</head>
+<body>
+    <div class="topbar">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+        <div class="search-bar">
+            <input type="text" placeholder="Pesquisar...">
+        </div>
+        <div class="icons">
+            <a href="{{ url_for('formulario') }}">
+                <img src="{{ url_for('static', filename='form_icon.png') }}" alt="Formulário" class="icon">
+            </a>
+            <a href="{{ url_for('perfil') }}">  <!-- Adicione o link aqui -->
+                <img src="{{ url_for('static', filename='profile_icon.png') }}" alt="Perfil" class="icon">
+            </a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="form-container">
+            <h1>Dashboard</h1>
+            <div class="formularios-list">
+                {% for formulario in formularios %}
+                    <div class="form-card">
+                        <div class="form-header">
+                            <div class="profile-img">
+                                <img src="{{ url_for('static', filename='profile-placeholder.png') }}" alt="Imagem de Perfil">
+                            </div>
+                            <h2>Tipo de Requisição: {{ formulario[1] }}</h2>
+                        </div>
+                        <div class="form-details">
+                            <p>Nome da Empresa: {{ formulario[2] }}</p>
+                            <p>Idade: {{ formulario[3] }}</p>
+                            <p>Gênero: {{ formulario[4] }}</p>
+                            <p>Tipo de Esporte: {{ formulario[5] }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
