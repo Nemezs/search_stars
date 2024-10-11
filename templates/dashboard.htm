@@ -9,19 +9,61 @@
 <body>
     <div class="topbar">
         <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+        
+        <!-- Barra de Pesquisa -->
         <div class="search-bar">
-            <input type="text" placeholder="Pesquisar...">
+            <form action="{{ url_for('dashboard') }}" method="GET">
+                <input type="text" name="nome_empresa" placeholder="Pesquisar por nome da empresa..." value="{{ nome_empresa }}">
+                <button type="submit">Pesquisar</button>
+            </form>
         </div>
+    
+        <!-- Ícones à direita -->
         <div class="icons">
             <a href="{{ url_for('formulario') }}">
                 <img src="{{ url_for('static', filename='form_icon.png') }}" alt="Formulário" class="icon">
             </a>
-            <a href="{{ url_for('perfil') }}">  <!-- Adicione o link aqui -->
+            <a href="{{ url_for('perfil') }}">
                 <img src="{{ url_for('static', filename='profile_icon.png') }}" alt="Perfil" class="icon">
             </a>
         </div>
     </div>
-
+    
+    <!-- Contêiner dos Filtros -->
+    <div class="filters-container"> <!-- Adicionado -->
+        <div class="filters">
+            <form action="{{ url_for('dashboard') }}" method="GET">
+                <input type="hidden" name="nome_empresa" value="{{ nome_empresa }}">
+        
+                <!-- Filtro de Idade -->
+                <div class="filter-group">
+                    <label for="idade">Filtrar por Idade:</label>
+                    <input type="number" id="idade" name="idade" value="{{ idade }}" placeholder="Digite a idade">
+                </div>
+        
+                <!-- Filtro de Gênero -->
+                <div class="filter-group">
+                    <label for="genero">Filtrar por Gênero:</label>
+                    <select id="genero" name="genero">
+                        <option value="">Selecione</option>
+                        <option value="Masculino" {% if genero == 'Masculino' %}selected{% endif %}>Masculino</option>
+                        <option value="Feminino" {% if genero == 'Feminino' %}selected{% endif %}>Feminino</option>
+                        <option value="Outro" {% if genero == 'Outro' %}selected{% endif %}>Outro</option>
+                    </select>
+                </div>
+        
+                <!-- Filtro de Esporte -->
+                <div class="filter-group">
+                    <label for="esporte">Filtrar por Esporte:</label>
+                    <input type="text" id="esporte" name="esporte" value="{{ esporte }}" placeholder="Digite o esporte">
+                </div>
+        
+                <button type="submit">Aplicar Filtros</button>
+            </form>
+        </div>
+    </div> <!-- Fechado o novo contêiner dos filtros -->
+    
+    <!-- Listagem de Formulários -->
     <div class="content">
         <div class="form-container">
             <h1>Dashboard</h1>
@@ -29,21 +71,22 @@
                 {% for formulario in formularios %}
                     <div class="form-card">
                         <div class="form-header">
-                            <div class="profile-img">
-                                <img src="{{ url_for('static', filename='profile-placeholder.png') }}" alt="Imagem de Perfil">
+                            <div class="form-details">
+                                <h2>Tipo de Requisição: {{ formulario[0] }}</h2>
+                                <p>Nome da Empresa: {{ formulario[1] }}</p>
+                                <p>Idade: {{ formulario[2] }}</p>
+                                <p>Gênero: {{ formulario[3] }}</p>
+                                <p>Tipo de Esporte: {{ formulario[4] }}</p>
                             </div>
-                            <h2>Tipo de Requisição: {{ formulario[1] }}</h2>
-                        </div>
-                        <div class="form-details">
-                            <p>Nome da Empresa: {{ formulario[2] }}</p>
-                            <p>Idade: {{ formulario[3] }}</p>
-                            <p>Gênero: {{ formulario[4] }}</p>
-                            <p>Tipo de Esporte: {{ formulario[5] }}</p>
+                            <div class="profile-img">
+                                <img src="{{ url_for('static', filename='uploads/' ~ formulario[6]) }}" alt="Imagem de Perfil" class="perfil-imagem">
+                            </div>
                         </div>
                     </div>
                 {% endfor %}
             </div>
         </div>
     </div>
+    
 </body>
 </html>

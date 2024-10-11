@@ -1,10 +1,14 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for, flash, session
+from werkzeug.utils import secure_filename  # Para garantir que o nome do arquivo seja seguro
 import requests
 import sqlite3
 from database import criar_tabela, adicionar_usuario, verificar_usuario, adicionar_formulario
 
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'  # Chave secreta para flash messages
+UPLOAD_FOLDER = 'static/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Inicializando banco de dados
 criar_tabela()
@@ -71,16 +75,46 @@ def login():
         return redirect(url_for('home'))
 
 # Nova rota para a tela inicial/dashboard
-@app.route('/dashboard')
+@app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
-    # Consulta ao banco de dados para trazer os dados dos formulários preenchidos
     conn = sqlite3.connect('usuarios.db')
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM formularios')
+    
+    # Valores de filtro que podem ser passados na requisição
+    nome_empresa = request.args.get('nome_empresa', '')
+    idade = request.args.get('idade', '')
+    genero = request.args.get('genero', '')
+    esporte = request.args.get('esporte', '')
+
+    # Query base
+    query = 'SELECT * FROM formularios WHERE 1=1'
+    params = []
+
+    # Filtrando por nome da empresa
+    if nome_empresa:
+        query += ' AND nome_empresa LIKE ?'
+        params.append(f'%{nome_empresa}%')
+
+    # Filtrando por idade
+    if idade:
+        query += ' AND idade = ?'
+        params.append(idade)
+
+    # Filtrando por gênero
+    if genero:
+        query += ' AND genero = ?'
+        params.append(genero)
+
+    # Filtrando por esporte
+    if esporte:
+        query += ' AND esporte LIKE ?'
+        params.append(f'%{esporte}%')
+
+    cursor.execute(query, params)
     formularios = cursor.fetchall()
     conn.close()
-    
-    return render_template('dashboard.htm', formularios=formularios)
+
+    return render_template('dashboard.htm', formularios=formularios, nome_empresa=nome_empresa, idade=idade, genero=genero, esporte=esporte)
 
 # Nova rota para o formulário
 @app.route('/formulario', methods=['GET', 'POST'])
@@ -92,8 +126,24 @@ def formulario():
         esporte = request.form['esporte']
         usuario_id = request.form['usuario_id']  # ID do usuário logado
 
+        # Verificação de upload de imagem
+        if 'imagem_perfil' not in request.files:
+            flash('Nenhuma imagem enviada!', 'error')
+            return redirect(request.url)
+
+        imagem_perfil = request.files['imagem_perfil']
+
+        # Verifica se o arquivo tem um nome válido
+        if imagem_perfil.filename == '':
+            flash('Nenhuma imagem selecionada.', 'error')
+            return redirect(request.url)
+
+        if imagem_perfil:
+            filename = secure_filename(imagem_perfil.filename)  # Garante que o nome do arquivo seja seguro
+            imagem_perfil.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))  # Salva a imagem na pasta uploads
+
         # Adicionar os dados do formulário ao banco de dados
-        adicionar_formulario(nome_empresa, idade, genero, esporte, usuario_id)
+        adicionar_formulario(nome_empresa, idade, genero, esporte, usuario_id, filename)
         flash('Formulário enviado com sucesso!', 'success')
         return redirect(url_for('dashboard'))
 

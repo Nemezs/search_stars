@@ -3,6 +3,7 @@ import sqlite3
 def criar_tabela():
     conn = sqlite3.connect('usuarios.db')
     cursor = conn.cursor()
+
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS usuarios (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -10,7 +11,7 @@ def criar_tabela():
             senha TEXT NOT NULL
         )
     ''')
-    
+
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS formularios (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -19,11 +20,11 @@ def criar_tabela():
             genero TEXT NOT NULL,
             esporte TEXT NOT NULL,
             usuario_id INTEGER,
-            imagem TEXT,
+            imagem_perfil TEXT,  -- Novo campo para imagem de perfil
             FOREIGN KEY (usuario_id) REFERENCES usuarios (id)
         )
     ''')
-    
+
     conn.commit()
     conn.close()
     
@@ -44,10 +45,12 @@ def verificar_usuario(cnpj, senha):
     conn.close()
     return usuario
 
-def adicionar_formulario(nome_empresa, idade, genero, esporte, usuario_id):
+def adicionar_formulario(nome_empresa, idade, genero, esporte, usuario_id, imagem_perfil):
     conn = sqlite3.connect('usuarios.db')
     cursor = conn.cursor()
-    cursor.execute('INSERT INTO formularios (nome_empresa, idade, genero, esporte, usuario_id) VALUES (?, ?, ?, ?, ?)', 
-                   (nome_empresa, idade, genero, esporte, usuario_id))
+    cursor.execute('''
+        INSERT INTO formularios (nome_empresa, idade, genero, esporte, usuario_id, imagem_perfil) 
+        VALUES (?, ?, ?, ?, ?, ?)''', 
+        (nome_empresa, idade, genero, esporte, usuario_id, imagem_perfil))
     conn.commit()
     conn.close()
