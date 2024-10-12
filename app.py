@@ -81,6 +81,7 @@ def dashboard():
     cursor = conn.cursor()
     
     # Valores de filtro que podem ser passados na requisição
+    requisicao = request.args.get('requisicao', '')
     nome_empresa = request.args.get('nome_empresa', '')
     idade = request.args.get('idade', '')
     genero = request.args.get('genero', '')
@@ -91,6 +92,10 @@ def dashboard():
     params = []
 
     # Filtrando por nome da empresa
+    if requisicao:
+        query += ' AND requisicao LIKE ?'
+        params.append(f'%{requisicao}%')
+
     if nome_empresa:
         query += ' AND nome_empresa LIKE ?'
         params.append(f'%{nome_empresa}%')
@@ -120,6 +125,7 @@ def dashboard():
 @app.route('/formulario', methods=['GET', 'POST'])
 def formulario():
     if request.method == 'POST':
+        requisicao = request.form['requisicao']
         nome_empresa = request.form['nome_empresa']
         idade = request.form['idade']
         genero = request.form['genero']
@@ -143,7 +149,7 @@ def formulario():
             imagem_perfil.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))  # Salva a imagem na pasta uploads
 
         # Adicionar os dados do formulário ao banco de dados
-        adicionar_formulario(nome_empresa, idade, genero, esporte, usuario_id, filename)
+        adicionar_formulario(requisicao, nome_empresa, idade, genero, esporte, usuario_id, filename)
         flash('Formulário enviado com sucesso!', 'success')
         return redirect(url_for('dashboard'))
 

@@ -13,12 +13,30 @@
             <form action="{{ url_for('formulario') }}" method="POST" enctype="multipart/form-data">
                 <!-- Campos já existentes -->
                 <div class="form-group">
+                    <label for="requisicao">Tipo de Requisição</label>
+                    <select id="requisicao" name="requisicao" required>
+                        <option value="">Selecione</option>
+                        <option value="Patrocinador">Patrocinador</option>
+                        <option value="Instituição">Instituição</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="nome_empresa">Nome da Empresa:</label>
                     <input type="text" id="nome_empresa" name="nome_empresa" required>
                 </div>
                 <div class="form-group">
+
                     <label for="idade">Idade:</label>
-                    <input type="number" id="idade" name="idade" required>
+                    <select id="idade" name="idade" required>
+                        <option value="">Selecione</option>
+                        <option value="10 a 15">10 a 15</option>
+                        <option value="15 a 20">15 a 20</option>
+                        <option value="20 a 25">20 a 25</option>
+                        <option value="25 a 30">25 a 30</option>
+                        <option value="30 a 35">30 a 35</option>
+                        <option value="35 a 40">35 a 40</option>
+                        <option value="Acima de 40">Acima de 40</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="genero">Gênero:</label>

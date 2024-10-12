@@ -124,11 +124,12 @@ h1 {
 
 /* Estilo do contêiner do formulário */
 .form-container {
-    background-color: white; /* Cor de fundo branca */
-    border-radius: 10px; /* Bordas arredondadas */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-    padding: 20px; /* Espaçamento interno */
-    margin: 20px; /* Margem ao redor do contêiner */
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px;
+    text-align: center; /* Centraliza todo o conteúdo dentro do formulário */
 }
 
 /* Ajustes nos grupos de formulário */
@@ -136,6 +137,7 @@ h1 {
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
+    text-align: left; /* Mantém os labels e inputs alinhados à esquerda */
 }
 
 .form-group label {
@@ -156,25 +158,45 @@ button {
     background-color: #FFB75E;
     color: white;
     border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
+    padding: 10px 20px;
+    border-radius: 20px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
+    width: 100%; /* Largura total do botão */
+    max-width: 200px; /* Limita a largura do botão */
+    text-align: center;
+    margin-top: 20px; /* Espaço entre o botão e o conteúdo acima */
 }
 
 button:hover {
     background-color: #ED8F03;
 }
 
-/* Link de voltar */
+/* Link de voltar ao dashboard */
 .back-link {
     display: inline-block;
     margin-top: 20px;
     color: #ED8F03;
     text-decoration: none;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: 1px solid #ED8F03; /* Adiciona uma borda ao redor do link */
+    border-radius: 20px;
+    cursor: pointer;
 }
 
 .back-link:hover {
-    text-decoration: underline;
+    background-color: #FFB75E;
+    color: white;
+    text-decoration: none;
+}
+
+/* Contêiner dos botões */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza os botões horizontalmente */
+    gap: 15px; /* Espaçamento entre o botão de enviar e o link de voltar */
+    margin-top: 20px;
 }

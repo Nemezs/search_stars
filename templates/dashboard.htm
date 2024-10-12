@@ -34,11 +34,29 @@
         <div class="filters">
             <form action="{{ url_for('dashboard') }}" method="GET">
                 <input type="hidden" name="nome_empresa" value="{{ nome_empresa }}">
+
+                <div class="filter-group">
+                    <label for="requisicao">Filtrar por requisição:</label>
+                    <select id="requisicao" name="requisicao">
+                        <option value="">Selecione</option>
+                        <option value="Patrocinador" {% if requisicao == 'Patrocinador' %}selected{% endif %}>Patrocinador</option>
+                        <option value="Instituição" {% if requisicao == 'Instituição' %}selected{% endif %}>Instituição</option>
+                    </select>
+                </div>
         
                 <!-- Filtro de Idade -->
                 <div class="filter-group">
                     <label for="idade">Filtrar por Idade:</label>
-                    <input type="number" id="idade" name="idade" value="{{ idade }}" placeholder="Digite a idade">
+                    <select id="idade" name="idade">
+                        <option value="">Selecione</option>
+                        <option value="10 a 15">10 a 15</option>
+                        <option value="15 a 20">15 a 20</option>
+                        <option value="20 a 25">20 a 25</option>
+                        <option value="25 a 30">25 a 30</option>
+                        <option value="30 a 35">30 a 35</option>
+                        <option value="35 a 40">35 a 40</option>
+                        <option value="Acima de 40">Acima de 40</option>
+                    </select>
                 </div>
         
                 <!-- Filtro de Gênero -->
@@ -66,20 +84,20 @@
     <!-- Listagem de Formulários -->
     <div class="content">
         <div class="form-container">
-            <h1>Dashboard</h1>
+            <h1>Requisições</h1>
             <div class="formularios-list">
                 {% for formulario in formularios %}
                     <div class="form-card">
                         <div class="form-header">
                             <div class="form-details">
-                                <h2>Tipo de Requisição: {{ formulario[0] }}</h2>
-                                <p>Nome da Empresa: {{ formulario[1] }}</p>
-                                <p>Idade: {{ formulario[2] }}</p>
-                                <p>Gênero: {{ formulario[3] }}</p>
-                                <p>Tipo de Esporte: {{ formulario[4] }}</p>
+                                <h2>Tipo: {{ formulario[1] }}</h2>
+                                <p>Nome da Empresa: {{ formulario[2] }}</p>
+                                <p>Idade: {{ formulario[3] }}</p>
+                                <p>Gênero: {{ formulario[4] }}</p>
+                                <p>Tipo de Esporte: {{ formulario[5] }}</p>
                             </div>
                             <div class="profile-img">
-                                <img src="{{ url_for('static', filename='uploads/' ~ formulario[6]) }}" alt="Imagem de Perfil" class="perfil-imagem">
+                                <img src="{{ url_for('static', filename='uploads/' ~ formulario[7]) }}" alt="Imagem de Perfil" class="perfil-imagem">
                             </div>
                         </div>
                     </div>
